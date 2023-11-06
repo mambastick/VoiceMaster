@@ -3,6 +3,7 @@ using DiscordBot.Handlers;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using LoggerService;
+using Microsoft.Extensions.Logging;
 
 namespace DiscordBot;
 
@@ -34,8 +35,7 @@ public class Bot
             TokenType = TokenType.Bot,
             Intents = DiscordIntents.GuildVoiceStates,
             AutoReconnect = true,
-            LogUnknownEvents = false,
-            LoggerFactory = null
+            MinimumLogLevel = LogLevel.None
         };
 
         Client = new DiscordClient(botConfig);
