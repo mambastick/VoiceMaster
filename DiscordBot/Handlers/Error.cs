@@ -1,7 +1,7 @@
 ﻿using DSharpPlus;
 using DSharpPlus.EventArgs;
 
-namespace Bot.Handlers;
+namespace DiscordBot.Handlers;
 
 public static class Error
 {

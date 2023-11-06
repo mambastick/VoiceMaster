@@ -1,10 +1,10 @@
-﻿using Bot.Handlers;
-using Database;
+﻿using Database;
+using DiscordBot.Handlers;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using LoggerService;
 
-namespace Bot;
+namespace DiscordBot;
 
 public class Bot
 {
@@ -43,6 +43,7 @@ public class Bot
         Client.Ready += Ready.ClientReady;
         Client.GuildAvailable += GuildAvailable.ClientGuildAvailable;
         Client.ClientErrored += Error.ClientError;
+        Client.VoiceStateUpdated += VoiceState.VoiceStateUpdatedAsync;
 
         var activity = new DiscordActivity("Create voice channels", ActivityType.Playing);
 

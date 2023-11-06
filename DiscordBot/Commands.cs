@@ -1,4 +1,4 @@
-﻿namespace Bot;
+﻿namespace DiscordBot;
 
 public class Commands
 {
