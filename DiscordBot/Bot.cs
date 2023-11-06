@@ -15,10 +15,10 @@ public class Bot
 
     public Bot(string token, Logger logger, MySqlDatabase database)
     {
+        Logger = logger;
         Logger.LogProcess("Инициализация бота...");
         
         Token = token;
-        Logger = logger;
         Database = database;
         
         Logger.LogSuccess("Бот успешно инициализирован.");
