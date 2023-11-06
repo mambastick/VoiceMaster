@@ -11,7 +11,7 @@ public class Bot
     private string Token { get; set; }
     public static Logger Logger { get; set; }
     public static MySqlDatabase Database { get; set; }
-    public static DiscordClient Client { get; set; }
+    private static DiscordClient Client { get; set; }
 
     public Bot(string token, Logger logger, MySqlDatabase database)
     {
