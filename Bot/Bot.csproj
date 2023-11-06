@@ -12,10 +12,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Handlers\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\..\Database\Database\Database.csproj" />
       <ProjectReference Include="..\..\Logger\Logger\Logger.csproj" />
     </ItemGroup>
