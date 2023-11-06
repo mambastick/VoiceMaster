@@ -33,7 +33,7 @@ public class Bot
         {
             Token = Token,
             TokenType = TokenType.Bot,
-            Intents = DiscordIntents.GuildVoiceStates,
+            Intents = DiscordIntents.Guilds | DiscordIntents.GuildVoiceStates,
             AutoReconnect = true,
             MinimumLogLevel = LogLevel.None
         };
