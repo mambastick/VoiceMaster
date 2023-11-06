@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Config", "..\Config\Config\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "..\Database\Database\Database.csproj", "{C467C48E-0A54-4BC3-9319-1E1AA67F3022}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bot", "Bot\Bot.csproj", "{C282BF1B-D255-4C73-A48B-F95096970462}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordBot", "DiscordBot\DiscordBot.csproj", "{C282BF1B-D255-4C73-A48B-F95096970462}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

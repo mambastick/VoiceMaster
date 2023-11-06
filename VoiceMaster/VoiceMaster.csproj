@@ -8,4 +8,11 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\Config\Config\Config.csproj" />
+      <ProjectReference Include="..\..\Database\Database\Database.csproj" />
+      <ProjectReference Include="..\..\Logger\Logger\Logger.csproj" />
+      <ProjectReference Include="..\DiscordBot\DiscordBot.csproj" />
+    </ItemGroup>
+
 </Project>
