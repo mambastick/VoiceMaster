@@ -44,8 +44,8 @@ public class Bot
         Client.GuildAvailable += GuildAvailable.ClientGuildAvailable;
         Client.ClientErrored += Error.ClientError;
         Client.VoiceStateUpdated += VoiceState.VoiceStateUpdatedAsync;
-
-        var activity = new DiscordActivity("Create voice channels", ActivityType.Playing);
+        
+        var activity = new DiscordActivity("Creating voice channels", ActivityType.Playing);
 
         await Client.ConnectAsync(activity, UserStatus.Online);
         
