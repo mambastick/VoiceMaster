@@ -9,22 +9,23 @@ public class VoiceState
     private const string CreatedVoiceChannelName = "🔊│Создать канал";
     private static readonly Dictionary<ulong, DiscordChannel> VoiceChannels = new();
 
-    public static Task VoiceStateUpdatedAsync(DiscordClient sender, VoiceStateUpdateEventArgs e)
+    public static async Task VoiceStateUpdatedAsync(DiscordClient sender, VoiceStateUpdateEventArgs e)
     {
         try
         {
-            if (e.After.Channel != null && e.After.Channel.Name == CreatedVoiceChannelName)
-                Task.Run(async () => await new VoiceState().CreateVoiceChannelAsync(e));
-            else if (e.Before?.Channel != null && e.Before.Channel.Users.Count == 0 &&
-                     e.Before.Channel.Name != CreatedVoiceChannelName)
-                Task.Run(async () => await new VoiceState().DeleteVoiceChannelAsync(e));
+            await Task.Run(async () =>
+            {
+                if (e.After.Channel != null && e.After.Channel.Name == CreatedVoiceChannelName)
+                    await new VoiceState().CreateVoiceChannelAsync(e);
+                else if (e.Before?.Channel != null && e.Before.Channel.Users.Count == 0 &&
+                         e.Before.Channel.Name != CreatedVoiceChannelName)
+                    await new VoiceState().DeleteVoiceChannelAsync(e);
+            });
         }
         catch (Exception ex)
         {
             Bot.Logger.LogError(ex.ToString());
         }
-
-        return Task.CompletedTask;
     }
 
     private async Task CreateVoiceChannelAsync(VoiceStateUpdateEventArgs e)
@@ -65,7 +66,7 @@ public class VoiceState
             var voiceChannel = e.Before.Channel;
             await voiceChannel.DeleteAsync("Пользователь удалил голосовой канал.");
             VoiceChannels.Remove(VoiceChannels.FirstOrDefault(findChannel => findChannel.Value == voiceChannel).Key);
-            
+
             var member = e.Before.User as DiscordMember;
             Bot.Logger.LogInformation(
                 $"Пользователь {member.DisplayName} удалил голосовой канал {voiceChannel.Name} ({voiceChannel.Id}).");
