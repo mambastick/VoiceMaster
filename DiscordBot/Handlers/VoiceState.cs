@@ -37,13 +37,15 @@ public class VoiceState
             var existingChannel = VoiceChannels.GetValueOrDefault(e.User.Id);
 
             if (existingChannel != null)
+            {
                 await member.ModifyAsync(properties => properties.VoiceChannel = existingChannel);
+            }
             else
             {
                 var createdChannel = await e.Guild.CreateChannelAsync(
-                    name: $"Канал - {member?.DisplayName}",
-                    type: ChannelType.Voice,
-                    parent: parent,
+                    $"Канал - {member?.DisplayName}",
+                    ChannelType.Voice,
+                    parent,
                     reason: $"Пользователь {member.DisplayName} создал голосовой канал.");
                 VoiceChannels[e.User.Id] = createdChannel;
 
