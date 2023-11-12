@@ -2,6 +2,7 @@
 using DiscordBot.Handlers;
 using DSharpPlus;
 using DSharpPlus.Entities;
+using DSharpPlus.SlashCommands;
 using LoggerService;
 using Microsoft.Extensions.Logging;
 
@@ -44,7 +45,11 @@ public class Bot
         Client.GuildAvailable += GuildAvailable.ClientGuildAvailable;
         Client.ClientErrored += Error.ClientError;
         Client.VoiceStateUpdated += VoiceState.VoiceStateUpdatedAsync;
-
+        
+        
+        var slashCommands = Client.UseSlashCommands();
+        slashCommands.RegisterCommands<Commands>();
+        
         var activity = new DiscordActivity("Creating voice channels", ActivityType.Playing);
 
         await Client.ConnectAsync(activity, UserStatus.Online);
