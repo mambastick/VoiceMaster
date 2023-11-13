@@ -2,7 +2,7 @@
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
-namespace DiscordBot;
+namespace DiscordBot.Commands;
 
 public abstract class Commands : ApplicationCommandModule
 {
