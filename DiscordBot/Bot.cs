@@ -46,10 +46,6 @@ public class Bot
         Client.ClientErrored += Error.ClientError;
         Client.VoiceStateUpdated += VoiceState.VoiceStateUpdatedAsync;
         
-        
-        var slashCommands = Client.UseSlashCommands();
-        slashCommands.RegisterCommands<Commands>();
-        
         var activity = new DiscordActivity("Creating voice channels", ActivityType.Playing);
 
         await Client.ConnectAsync(activity, UserStatus.Online);
