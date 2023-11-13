@@ -4,7 +4,7 @@ using DSharpPlus.SlashCommands;
 
 namespace DiscordBot.Commands;
 
-public abstract class Commands : ApplicationCommandModule
+public abstract class GlobalCommands : ApplicationCommandModule
 {
     [SlashCommand("setup", "Setup voice channel for creating temporary voice channels")]
     public async Task SetupCommandAsync(InteractionContext ctx)
