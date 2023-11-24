@@ -1,26 +1,23 @@
-﻿using DSharpPlus;
+﻿using DiscordBot.Data;
+using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
+using ChannelType = DiscordBot.Data.ChannelType;
 
 namespace DiscordBot.Handlers;
 
 public class VoiceState
 {
-    private const string CreatedVoiceChannelName = "🔊│Создать канал";
-    private static readonly Dictionary<ulong, DiscordChannel> VoiceChannels = new();
-
     public static async Task VoiceStateUpdatedAsync(DiscordClient sender, VoiceStateUpdateEventArgs e)
     {
         try
         {
-            await Task.Run(async () =>
-            {
-                if (e.After.Channel != null && e.After.Channel.Name == CreatedVoiceChannelName)
-                    await new VoiceState().CreateVoiceChannelAsync(e);
-                else if (e.Before?.Channel != null && e.Before.Channel.Users.Count == 0 &&
-                         e.Before.Channel.Name != CreatedVoiceChannelName)
-                    await new VoiceState().DeleteVoiceChannelAsync(e);
-            });
+            var createdVoiceChannelId = await new VoiceChannel().GetChannelIdAsync(e.Guild.Id, channelType: ChannelType.Setup);
+            if (e.After.Channel != null && e.After.Channel.Id == createdVoiceChannelId)
+                await new VoiceState().CreateVoiceChannelAsync(e);
+            else if (e.Before?.Channel != null && e.Before.Channel.Id != createdVoiceChannelId
+                     && e.Before.Channel.Users.Count == 0)
+                await new VoiceState().DeleteVoiceChannelAsync(e);
         }
         catch (Exception ex)
         {
@@ -33,23 +30,29 @@ public class VoiceState
         try
         {
             var member = e.User as DiscordMember;
-            var parent = e.Channel.Parent;
-            var existingChannel = VoiceChannels.GetValueOrDefault(e.User.Id);
-
-            if (existingChannel != null)
+            var databaseChannel = new VoiceChannel();
+            var voiceChannelId = await databaseChannel.GetChannelIdAsync(e.Guild.Id, e.User.Id);
+            if (voiceChannelId != null)
             {
-                await member.ModifyAsync(properties => properties.VoiceChannel = existingChannel);
+                var voiceChannel = e.Guild.GetChannel((ulong)voiceChannelId);
+                await member.ModifyAsync(properties => properties.VoiceChannel = voiceChannel);
+                
+                Bot.Logger.LogInformation(
+                    $"Пользователь {member.DisplayName} перемещен в голосовой канал " +
+                    $"{member.VoiceState?.Channel?.Name} ({member.VoiceState?.Channel?.Id}) " +
+                    $"(Попытка создать второй канал).");
             }
             else
             {
                 var createdChannel = await e.Guild.CreateChannelAsync(
                     $"Канал - {member?.DisplayName}",
-                    ChannelType.Voice,
-                    parent,
+                    DSharpPlus.ChannelType.Voice,
+                    e.Channel.Parent,
                     reason: $"Пользователь {member.DisplayName} создал голосовой канал.");
-                VoiceChannels[e.User.Id] = createdChannel;
 
                 await member.ModifyAsync(properties => properties.VoiceChannel = createdChannel);
+
+                await databaseChannel.AddToDatabaseAsync(createdChannel, ChannelType.Usual, e.User.Id);
 
                 Bot.Logger.LogInformation(
                     $"Пользователь {member.DisplayName} создал голосовой канал {member.VoiceState?.Channel?.Name} ({member.VoiceState?.Channel?.Id}).");
@@ -67,7 +70,8 @@ public class VoiceState
         {
             var voiceChannel = e.Before.Channel;
             await voiceChannel.DeleteAsync("Пользователь удалил голосовой канал.");
-            VoiceChannels.Remove(VoiceChannels.FirstOrDefault(findChannel => findChannel.Value == voiceChannel).Key);
+
+            await new VoiceChannel().DeleteFromDatabaseAsync(voiceChannel);
 
             var member = e.Before.User as DiscordMember;
             Bot.Logger.LogInformation(
