@@ -46,6 +46,9 @@ public class Bot
         Client.GuildAvailable += GuildAvailable.ClientGuildAvailable;
         Client.ClientErrored += Error.ClientError;
         Client.VoiceStateUpdated += VoiceState.VoiceStateUpdatedAsync;
+        Client.ChannelDeleted += Channel.ChannelDeletedHandlerAsync;
+        Client.GuildCreated += Guild.GuildCreatedAsync;
+        Client.ComponentInteractionCreated += Interaction.ButtonHandlerAsync;
 
         var slashCommands = Client.UseSlashCommands();
         slashCommands.SlashCommandErrored += SlashCommand.ErrorHandlerAsync;
