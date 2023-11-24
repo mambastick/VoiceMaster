@@ -3,6 +3,7 @@ using DiscordBot.Commands.SlashCommands;
 using DiscordBot.Handlers;
 using DSharpPlus;
 using DSharpPlus.Entities;
+using DSharpPlus.EventArgs;
 using DSharpPlus.SlashCommands;
 using LoggerService;
 using Microsoft.Extensions.Logging;
@@ -35,7 +36,9 @@ public class Bot
         {
             Token = Token,
             TokenType = TokenType.Bot,
-            Intents = DiscordIntents.Guilds | DiscordIntents.GuildVoiceStates,
+            Intents = DiscordIntents.Guilds
+                | DiscordIntents.GuildVoiceStates
+                | DiscordIntents.GuildIntegrations,
             AutoReconnect = true,
             MinimumLogLevel = LogLevel.None
         };
