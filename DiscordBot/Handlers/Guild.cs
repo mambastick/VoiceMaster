@@ -6,7 +6,7 @@ namespace DiscordBot.Handlers;
 
 public class Guild
 {
-    public static async Task GuildCreatedAsync(DiscordClient client, GuildCreateEventArgs createdGuild)
+    public static async Task GuildCreatedHandlerAsync(DiscordClient client, GuildCreateEventArgs createdGuild)
     {
         try
         {
