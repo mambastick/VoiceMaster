@@ -8,7 +8,7 @@ namespace DiscordBot.Handlers;
 
 public class VoiceState
 {
-    public static async Task VoiceStateUpdatedAsync(DiscordClient sender, VoiceStateUpdateEventArgs e)
+    public static async Task VoiceStateHandlerAsync(DiscordClient sender, VoiceStateUpdateEventArgs e)
     {
         try
         {
