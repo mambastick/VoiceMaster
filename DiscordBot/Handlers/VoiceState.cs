@@ -56,7 +56,7 @@ public class VoiceState
                 await databaseChannel.AddToDatabaseAsync(createdChannel, ChannelType.Usual, e.User.Id);
 
                 Bot.Logger.LogInformation(
-                    $"User {member.DisplayName} created voice channel: {member.VoiceState?.Channel?.Name} " +
+                    $"User {member.DisplayName} ({member.Id}) created voice channel: {member.VoiceState?.Channel?.Name} " +
                     $"({member.VoiceState?.Channel?.Id}).");
             }
         }
@@ -76,7 +76,7 @@ public class VoiceState
 
             await new VoiceChannel().DeleteFromDatabaseAsync(voiceChannel);
             Bot.Logger.LogInformation(
-                $"User {user.DisplayName} deleted voice channel: {voiceChannel.Name} ({voiceChannel.Id}).");
+                $"User {user.DisplayName} ({user.Id}) deleted voice channel: {voiceChannel.Name} ({voiceChannel.Id}).");
         }
         catch (Exception ex)
         {
