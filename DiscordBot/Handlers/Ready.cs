@@ -7,7 +7,7 @@ public static class Ready
 {
     public static Task ReadyHandler(DiscordClient sender, ReadyEventArgs e)
     {
-        Bot.Logger.LogSuccess("Бот готов к получению событий.");
+        Bot.Logger.LogSuccess("Bot is ready to receive events.");
         return Task.CompletedTask;
     }
 }
