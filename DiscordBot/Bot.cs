@@ -47,7 +47,7 @@ public class Bot
 
         Client.Ready += Ready.ReadyHandler;
         Client.GuildAvailable += GuildAvailable.GuildAvailableHandler;
-        Client.ClientErrored += Error.ClientError;
+        Client.ClientErrored += Error.ErrorHandler;
         Client.VoiceStateUpdated += VoiceState.VoiceStateUpdatedAsync;
         Client.ChannelDeleted += Channel.ChannelDeletedHandlerAsync;
         Client.GuildCreated += Guild.GuildCreatedAsync;
