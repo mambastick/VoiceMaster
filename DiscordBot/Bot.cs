@@ -46,7 +46,7 @@ public class Bot
         Client = new DiscordClient(botConfig);
 
         Client.Ready += Ready.ReadyHandler;
-        Client.GuildAvailable += GuildAvailable.ClientGuildAvailable;
+        Client.GuildAvailable += GuildAvailable.GuildAvailableHandler;
         Client.ClientErrored += Error.ClientError;
         Client.VoiceStateUpdated += VoiceState.VoiceStateUpdatedAsync;
         Client.ChannelDeleted += Channel.ChannelDeletedHandlerAsync;
