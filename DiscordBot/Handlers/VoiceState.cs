@@ -12,7 +12,8 @@ public class VoiceState
     {
         try
         {
-            var createdVoiceChannelId = await new VoiceChannel().GetChannelIdAsync(e.Guild.Id, channelType: ChannelType.Setup);
+            var createdVoiceChannelId =
+                await new VoiceChannel().GetChannelIdAsync(e.Guild.Id, channelType: ChannelType.Setup);
             if (e.After.Channel != null && e.After.Channel.Id == createdVoiceChannelId)
                 await new VoiceState().CreateVoiceChannelAsync(e);
             else if (e.Before?.Channel != null && e.Before.Channel.Id != createdVoiceChannelId
@@ -36,26 +37,27 @@ public class VoiceState
             {
                 var voiceChannel = e.Guild.GetChannel((ulong)voiceChannelId);
                 await member.ModifyAsync(properties => properties.VoiceChannel = voiceChannel);
-                
+
                 Bot.Logger.LogInformation(
-                    $"Пользователь {member.DisplayName} перемещен в голосовой канал " +
+                    $"User {member.DisplayName} moved to the voice channel " +
                     $"{member.VoiceState?.Channel?.Name} ({member.VoiceState?.Channel?.Id}) " +
-                    $"(Попытка создать второй канал).");
+                    $"(Attempt to create a second channel).");
             }
             else
             {
                 var createdChannel = await e.Guild.CreateChannelAsync(
-                    $"Канал - {member?.DisplayName}",
+                    $"Channel - {member?.DisplayName}",
                     DSharpPlus.ChannelType.Voice,
                     e.Channel.Parent,
-                    reason: $"Пользователь {member.DisplayName} создал голосовой канал.");
+                    reason: $"User {member.DisplayName} created a voice channel.");
 
                 await member.ModifyAsync(properties => properties.VoiceChannel = createdChannel);
 
                 await databaseChannel.AddToDatabaseAsync(createdChannel, ChannelType.Usual, e.User.Id);
 
                 Bot.Logger.LogInformation(
-                    $"Пользователь {member.DisplayName} создал голосовой канал {member.VoiceState?.Channel?.Name} ({member.VoiceState?.Channel?.Id}).");
+                    $"User {member.DisplayName} created voice channel: {member.VoiceState?.Channel?.Name} " +
+                    $"({member.VoiceState?.Channel?.Id}).");
             }
         }
         catch (Exception ex)
@@ -69,13 +71,12 @@ public class VoiceState
         try
         {
             var voiceChannel = e.Before.Channel;
-            await voiceChannel.DeleteAsync("Пользователь удалил голосовой канал.");
+            var user = e.User as DiscordMember;
+            await voiceChannel.DeleteAsync($"User {user.DisplayName} deleted voice channel");
 
             await new VoiceChannel().DeleteFromDatabaseAsync(voiceChannel);
-
-            var member = e.Before.User as DiscordMember;
             Bot.Logger.LogInformation(
-                $"Пользователь {member.DisplayName} удалил голосовой канал {voiceChannel.Name} ({voiceChannel.Id}).");
+                $"User {user.DisplayName} deleted voice channel: {voiceChannel.Name} ({voiceChannel.Id}).");
         }
         catch (Exception ex)
         {

@@ -7,14 +7,14 @@ public abstract class SlashCommand
 {
     public static Task ExecuteHandlerAsync(SlashCommandsExtension sender, SlashCommandExecutedEventArgs args)
     {
-        Bot.Logger.LogSuccess(args.Context.User.Username + " успешно использовал команду " +
+        Bot.Logger.LogSuccess(args.Context.User.Username + " have been used " +
             args.Context.Interaction.Data.Name);
         return Task.CompletedTask;
     }
 
     public static Task InvokeHandlerAsync(SlashCommandsExtension sender, SlashCommandInvokedEventArgs args)
     {
-        Bot.Logger.LogProcess(args.Context.User.Username + " использует команду " +
+        Bot.Logger.LogProcess(args.Context.User.Username + " using command " +
             args.Context.Interaction.Data.Name);
         return Task.CompletedTask;
     }
