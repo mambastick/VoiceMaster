@@ -64,7 +64,7 @@ public class Bot
 
         await Client.ConnectAsync(activity, UserStatus.Online);
 
-        Logger.LogSuccess("Бот успешно запущен!");
+        Logger.LogSuccess("The bot is running.");
     }
 
     public async Task StopAsync() => await Client.DisconnectAsync();
