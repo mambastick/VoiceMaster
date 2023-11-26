@@ -58,6 +58,7 @@ public class Bot
         slashCommands.SlashCommandInvoked += SlashCommand.InvokeHandlerAsync;
         slashCommands.SlashCommandExecuted += SlashCommand.ExecuteHandlerAsync;
         slashCommands.RegisterCommands<VoiceChannelCommands>();
+        slashCommands.RegisterCommands<AboutMeCommands>();
         slashCommands.RegisterCommands<AdminCommands>(645297558994026513);
 
         var activity = new DiscordActivity("Creating voice channels", ActivityType.Playing);
