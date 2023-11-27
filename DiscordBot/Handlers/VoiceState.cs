@@ -8,22 +8,27 @@ namespace DiscordBot.Handlers;
 
 public class VoiceState
 {
-    public static async Task VoiceStateHandlerAsync(DiscordClient sender, VoiceStateUpdateEventArgs e)
+    public static Task VoiceStateHandlerAsync(DiscordClient sender, VoiceStateUpdateEventArgs e)
     {
         try
         {
-            var createdVoiceChannelId =
-                await new VoiceChannel().GetChannelIdAsync(e.Guild.Id, channelType: ChannelType.Setup);
-            if (e.After.Channel != null && e.After.Channel.Id == createdVoiceChannelId)
-                await new VoiceState().CreateVoiceChannelAsync(e);
-            else if (e.Before?.Channel != null && e.Before.Channel.Id != createdVoiceChannelId
-                     && e.Before.Channel.Users.Count == 0)
-                await new VoiceState().DeleteVoiceChannelAsync(e);
+            _ = Task.Run(async () =>
+            {
+                var createdVoiceChannelId =
+                    await new VoiceChannel().GetChannelIdAsync(e.Guild.Id, channelType: ChannelType.Setup);
+                if (e.After.Channel != null && e.After.Channel.Id == createdVoiceChannelId)
+                    await new VoiceState().CreateVoiceChannelAsync(e);
+                else if (e.Before?.Channel != null && e.Before.Channel.Id != createdVoiceChannelId
+                         && e.Before.Channel.Users.Count == 0)
+                    await new VoiceState().DeleteVoiceChannelAsync(e); 
+            });
         }
         catch (Exception ex)
         {
             Bot.Logger.LogError(ex.ToString());
         }
+        
+        return Task.CompletedTask;
     }
 
     private async Task CreateVoiceChannelAsync(VoiceStateUpdateEventArgs e)
@@ -52,7 +57,6 @@ public class VoiceState
                     reason: $"User {member.DisplayName} created a voice channel.");
 
                 await member.ModifyAsync(properties => properties.VoiceChannel = createdChannel);
-
                 await databaseChannel.AddToDatabaseAsync(createdChannel, ChannelType.Usual, e.User.Id);
 
                 Bot.Logger.LogInformation(

@@ -25,7 +25,8 @@ public class VoiceChannelCommands : ApplicationCommandModule
             await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                 new DiscordInteractionResponseBuilder()
                     .WithContent("The channel for creating temporary voice channels has been successfully created.\n" +
-                        $"To enter the voice channel, click here: {setupVoiceChannel.Mention}")
+                        $"To enter the voice channel, click here: {setupVoiceChannel.Mention}\n\n" +
+                        $"You can also move this channel to any place convenient for you, as well as change its name.")
                     .AsEphemeral());
 
             await voiceChannel.AddToDatabaseAsync(setupVoiceChannel, ChannelType.Setup);
