@@ -15,12 +15,12 @@ public class Bot
     public Bot(string token, Logger logger, MySqlDatabase database)
     {
         Logger = logger;
-        Logger.LogProcess("Инициализация бота...");
+        Logger.LogProcess("Initializing the bot...");
 
         Token = token;
         Database = database;
 
-        Logger.LogSuccess("Бот успешно инициализирован.");
+        Logger.LogSuccess("The bot has been successfully initialized.");
     }
 
     private string Token { get; }
@@ -30,7 +30,7 @@ public class Bot
 
     public async Task StartAsync()
     {
-        Logger.LogProcess("Запуск бота...");
+        Logger.LogProcess("Starting the bot...");
 
         var botConfig = new DiscordConfiguration
         {
