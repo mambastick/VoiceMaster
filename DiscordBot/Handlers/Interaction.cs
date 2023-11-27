@@ -44,13 +44,13 @@ public class Interaction
                                     "Setup",
                                     true,
                                     new DiscordComponentEmoji(DiscordEmoji.FromName(client, ":loud_sound:")))));
-                        
-                        await ctx.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                            new DiscordInteractionResponseBuilder()
-                                .WithContent("The channel for creating temporary voice channels has been successfully created.\n" +
+
+                        await ctx.Interaction.Channel.SendMessageAsync(
+                            new DiscordMessageBuilder()
+                                .WithContent(
+                                    "The channel for creating temporary voice channels has been successfully created.\n" +
                                     $"To enter the voice channel, click here: {setupVoiceChannel.Mention}\n\n" +
-                                    $"You can also move this channel to any place convenient for you, as well as change its name.")
-                                .AsEphemeral());
+                                    $"You can also move this channel to any place convenient for you, as well as change its name."));
                         return;
                 }
             });
