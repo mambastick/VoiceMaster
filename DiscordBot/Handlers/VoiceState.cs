@@ -57,7 +57,6 @@ public class VoiceState
                     reason: $"User {member.DisplayName} created a voice channel.");
 
                 await member.ModifyAsync(properties => properties.VoiceChannel = createdChannel);
-
                 await databaseChannel.AddToDatabaseAsync(createdChannel, ChannelType.Usual, e.User.Id);
 
                 Bot.Logger.LogInformation(
