@@ -26,7 +26,7 @@ public class Bot
     private string Token { get; }
     public static Logger Logger { get; private set; }
     public static MySqlDatabase Database { get; private set; }
-    public static DiscordClient Client { get; set; }
+    public static DiscordClient Client { get; private set; }
 
     public async Task StartAsync()
     {
