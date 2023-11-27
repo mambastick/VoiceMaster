@@ -25,7 +25,7 @@ public class AboutMeCommands : ApplicationCommandModule
                             "Feel free to explore its features, and if you have any suggestions or encounter any issues, " +
                             "don't hesitate to let me know.\n" +
                             "Let's work together to make it even better!")
-                        .WithColor(DiscordColor.Blue))
+                        .WithColor(DiscordColor.IndianRed))
                     .AddComponents(new DiscordLinkButtonComponent("https://github.com/mambastick/VoiceMaster",
                         "My GitHub"))
                     .AsEphemeral());
