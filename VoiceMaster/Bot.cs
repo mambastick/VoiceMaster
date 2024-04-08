@@ -46,6 +46,7 @@ public class Bot(string token)
         // Прослушиваем события 
         Client.ClientErrored += new ErrorHandler().ClientOnError; // Ошибки
         Client.Ready += new ReadyHandler().ClientOnReady; // Готовность бота
+        Client.GuildAvailable += new GuildAvailableHandler().ClientOnGuildAvailable; // Доступные сервера
         // Подключаемся к серверу для прослушивания событий
         await Client.ConnectAsync(
             activity: botActivity,
