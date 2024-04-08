@@ -41,6 +41,8 @@ public class Bot(string token)
             ActivityType = ActivityType.Playing,
         };
 
+        // Прослушиваем события 
+        Client.ClientErrored += new ErrorHandler().ClientOnError; // Ошибки
         // Подключаемся к серверу для прослушивания событий
         await Client.ConnectAsync(
             activity: botActivity,
