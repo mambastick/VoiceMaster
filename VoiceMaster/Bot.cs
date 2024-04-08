@@ -2,6 +2,8 @@
 using DSharpPlus.Entities;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using VoiceMaster.Handlers;
+using VoiceMaster.Handlers.Guild;
 
 namespace VoiceMaster;
 
