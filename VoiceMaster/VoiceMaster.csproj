@@ -10,10 +10,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Config\Config\Config.csproj" />
-      <ProjectReference Include="..\..\Database\Database\Database.csproj" />
-      <ProjectReference Include="..\..\Logger\Logger\Logger.csproj" />
-      <ProjectReference Include="..\DiscordBot\DiscordBot.csproj" />
+      <PackageReference Include="DSharpPlus" Version="4.4.6" />
+      <PackageReference Include="DSharpPlus.SlashCommands" Version="4.4.6" />
+      <PackageReference Include="Serilog" Version="3.1.1" />
+      <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
+      <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
+      <PackageReference Include="Serilog.Sinks.Discord" Version="1.2.1" />
+      <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     </ItemGroup>
 
 </Project>
