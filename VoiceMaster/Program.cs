@@ -27,7 +27,7 @@ public class Program
                 a.Discord(
                     webhookId: 1226968570941145319,
                     webhookToken: "BHOBr0ixfRYulZpH5mizdQZ56trekZwSzWaopOLQdMYRhr_ogavq0I4uoUZTQJPoWZSC",
-                    restrictedToMinimumLevel: LogEventLevel.Warning
+                    restrictedToMinimumLevel: LogEventLevel.Information
                 ); // Логируем в Discord
             })
             .CreateLogger();
