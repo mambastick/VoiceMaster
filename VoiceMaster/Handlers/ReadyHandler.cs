@@ -10,11 +10,12 @@ public class ReadyHandler
     {
         try
         {
-
+            Log.Logger.Information($"Бот готов к получению приходящих событий.");
         }
         catch (Exception ex)
         {
             Log.Logger.Error(ex, ex.Message);
+            throw;
         }
 
         return Task.CompletedTask;
