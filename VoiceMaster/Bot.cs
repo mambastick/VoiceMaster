@@ -48,6 +48,7 @@ public class Bot(string token)
         Client.Ready += new ReadyHandler().ClientOnReady; // Готовность бота
         Client.GuildAvailable += new GuildAvailableHandler().ClientOnGuildAvailable; // Доступные сервера
         Client.GuildCreated += new GuildCreatedHandler().ClientOnGuildCreated; // Создание сервера (т.е. добавление бота на него)
+        Client.VoiceStateUpdated += new VoiceStateUpdateHandler().ClientOnVoiceStateUpdated;// Голосовые каналы
         // Подключаемся к серверу для прослушивания событий
         await Client.ConnectAsync(
             activity: botActivity,
