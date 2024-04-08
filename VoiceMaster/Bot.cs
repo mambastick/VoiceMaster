@@ -15,6 +15,9 @@ public class Bot(string token)
     // Клиент бота для действий (отправить сообщение, забанить и т.д.)
     public DiscordClient? Client { get; set; }
     
+    // Токен, с помощью которого можно отменить действия
+    private CancellationTokenSource? CancellationTokenSource { get; set; }
+    
     // Запуск бота
     public async Task StartAsync()
     {
@@ -57,6 +60,15 @@ public class Bot(string token)
             activity: botActivity,
             status: UserStatus.Online
             );
+        
+        // Создаем токен отмены
+        CancellationTokenSource = new CancellationTokenSource();
+        
+        // Запускаем бесконечный цикл с токеном отмены
+        while (!CancellationTokenSource.IsCancellationRequested)
+        {
+            // Игнорируем
+        }
     }
 
     // Остановка бота
@@ -64,6 +76,7 @@ public class Bot(string token)
     {
         Log.Logger.Information($"Бот выключается...");
         await Client.DisconnectAsync();
+        await CancellationTokenSource.CancelAsync();
         Log.Logger.Information($"Бот выключен.");
     }
 }
