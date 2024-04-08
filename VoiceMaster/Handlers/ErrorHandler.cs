@@ -10,11 +10,12 @@ public class ErrorHandler
     {
         try
         {
-
+            Log.Logger.Error(args.Exception, args.Exception.Message);
         }
         catch (Exception ex)
         {
             Log.Logger.Error(ex, ex.Message);
+            throw;
         }
         
         return Task.CompletedTask;
