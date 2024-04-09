@@ -27,6 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Commands\SlashCommands\" />
       <Folder Include="Database\Migrations\" />
     </ItemGroup>
 
