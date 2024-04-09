@@ -6,7 +6,7 @@ using VoiceMaster.Models;
 
 namespace VoiceMaster.Commands.SlashCommands;
 
-public class VoiceChannelCommands : ApplicationCommandModule
+public class SetupCommand : ApplicationCommandModule
 {
     [SlashCommand("setup", "Создать голосовой канал для создания временных голосовых каналов")]
     public async Task SetupCommandAsync(InteractionContext context)
