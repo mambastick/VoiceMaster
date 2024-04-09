@@ -29,14 +29,14 @@ public class Program
             .WriteTo.Async(a =>
             {
                 a.Discord(
-                    webhookId: Convert.ToUInt64( Environment.GetEnvironmentVariable("WEBHOOK_ID")),
-                    webhookToken: Environment.GetEnvironmentVariable("WEBHOOK_URL"),
+                    webhookId: Convert.ToUInt64(env["WEBHOOK_ID"]),
+                    webhookToken: env["WEBHOOK_URL"],
                     restrictedToMinimumLevel: LogEventLevel.Information
                 ); // Логируем в Discord
             })
             .CreateLogger();
-
-        var voiceMaster = new Bot(token: Environment.GetEnvironmentVariable("TOKEN"));
+        
+        var voiceMaster = new Bot(token: env["BOT_TOKEN"]);
         await voiceMaster.StartAsync();
     }
 }
