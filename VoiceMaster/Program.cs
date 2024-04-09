@@ -10,11 +10,8 @@ public class Program
 {
     private static async Task Main()
     {
-        // Загрузка переменных среды из файла .env
-        DotEnv.Load();
-
-        // Проверка переменных сред
-        ValidateEnvironment(DotEnv.Read());
+        // Загрузка переменных сред
+        var env = AppSettings.GetAppSettings();
         
         // Создание логгера
         Log.Logger = new LoggerConfiguration()
@@ -41,17 +38,5 @@ public class Program
 
         var voiceMaster = new Bot(token: Environment.GetEnvironmentVariable("TOKEN"));
         await voiceMaster.StartAsync();
-    }
-    
-    private static void ValidateEnvironment(IDictionary<string, string> env)
-    {
-        foreach (var key in env.Keys)
-        {
-            var value = env[key];
-            if (string.IsNullOrEmpty(value))
-            {
-                throw new Exception($"{key} не может быть пустым!");
-            }
-        }
     }
 }

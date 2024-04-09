@@ -11,7 +11,15 @@ public class ApplicationContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var connectionString = $"";
+        // Загрузка переменных сред
+        var env = AppSettings.GetAppSettings();
+        
+        // Строка подключения к базе данных
+        var connectionString = $"server={env["DATABASE_HOST"]};" +
+                               $"port={env["DATABASE_PORT"]};" +
+                               $"database={env["DATABASE_NAME"]};" +
+                               $"user={env["DATABASE_USER"]};" +
+                               $"password={env["DATABASE_PASSWORD"]}";;
         
         // Вычисляем версию MySQL
         var mySqlVersion = ServerVersion.AutoDetect(connectionString);
