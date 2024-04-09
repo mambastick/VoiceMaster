@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using dotenv.net;
+using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.Discord;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -9,6 +10,12 @@ public class Program
 {
     private static async Task Main()
     {
+        // Загрузка переменных среды из файла .env
+        DotEnv.Load();
+
+        // Проверка переменных сред
+        ValidateEnvironment(DotEnv.Read());
+        
         // Создание логгера
         var logger = Log.Logger = new LoggerConfiguration()
             .WriteTo.Console(
@@ -25,13 +32,26 @@ public class Program
             .WriteTo.Async(a =>
             {
                 a.Discord(
-                    webhookId: 1226968570941145319,
-                    webhookToken: "BHOBr0ixfRYulZpH5mizdQZ56trekZwSzWaopOLQdMYRhr_ogavq0I4uoUZTQJPoWZSC",
+                    webhookId: Convert.ToUInt64( Environment.GetEnvironmentVariable("WEBHOOK_ID")),
+                    webhookToken: Environment.GetEnvironmentVariable("WEBHOOK_URL"),
                     restrictedToMinimumLevel: LogEventLevel.Information
                 ); // Логируем в Discord
             })
             .CreateLogger();
-        
-        
+
+        var voiceMaster = new Bot(token: Environment.GetEnvironmentVariable("TOKEN"));
+        await voiceMaster.StartAsync();
+    }
+    
+    private static void ValidateEnvironment(IDictionary<string, string> env)
+    {
+        foreach (var key in env.Keys)
+        {
+            var value = env[key];
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new Exception($"{key} не может быть пустым!");
+            }
+        }
     }
 }
