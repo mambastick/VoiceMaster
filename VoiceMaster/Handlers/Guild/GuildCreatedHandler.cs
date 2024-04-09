@@ -7,6 +7,6 @@ public class GuildCreatedHandler
 {
     public Task ClientOnGuildCreated(DiscordClient sender, GuildCreateEventArgs args)
     {
-        throw new NotImplementedException();
+        return Task.CompletedTask;
     }
 }

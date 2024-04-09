@@ -7,6 +7,6 @@ public class ChannelDeletedHandler
 {
     public Task ClientOnChannelDeleted(DiscordClient sender, ChannelDeleteEventArgs args)
     {
-        throw new NotImplementedException();
+        return Task.CompletedTask;
     }
 }

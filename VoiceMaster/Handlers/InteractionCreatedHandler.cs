@@ -7,6 +7,6 @@ public class InteractionCreatedHandler
 {
     public Task ClientOnComponentInteractionCreated(DiscordClient sender, ComponentInteractionCreateEventArgs args)
     {
-        throw new NotImplementedException();
+        return Task.CompletedTask;
     }
 }
