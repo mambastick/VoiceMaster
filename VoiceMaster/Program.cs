@@ -41,5 +41,7 @@ public class Program
         
         // Запускаем бота
         await voiceMaster.StartAsync();
+        
+        await Log.CloseAndFlushAsync();
     }
 }
