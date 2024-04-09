@@ -27,8 +27,11 @@ public class SetupCommand : ApplicationCommandModule
                                  "Вы также можете переместить этот канал в любое удобное для вас место, а также изменить его название.")
                     .AsEphemeral());
 
-            voiceChannel.ChannelId = setupVoiceChannel.Id;
-            voiceChannel.GuildId = context.Guild.Id;
+            voiceChannel = new SetupChannel
+            {
+                ChannelId = setupVoiceChannel.Id,
+                GuildId = setupVoiceChannel.Guild.Id
+            };
             await voiceChannel.AddAsync();
         }
         catch (Exception ex) when (ex.Message == "Канал для создания временных голосовых каналов уже установлен.")
