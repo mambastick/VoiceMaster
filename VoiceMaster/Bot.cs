@@ -1,9 +1,11 @@
 ﻿using DSharpPlus;
 using DSharpPlus.Entities;
+using DSharpPlus.SlashCommands;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using VoiceMaster.Handlers;
 using VoiceMaster.Handlers.Guild;
+using VoiceMaster.Commands.SlashCommands;
 
 namespace VoiceMaster;
 
@@ -54,6 +56,13 @@ public class Bot(string token)
         Client.VoiceStateUpdated += new VoiceStateUpdateHandler().ClientOnVoiceStateUpdated;// Голосовые каналы
         Client.ChannelDeleted += new ChannelDeletedHandler().ClientOnChannelDeleted; // Удаление канала
         Client.ComponentInteractionCreated += new InteractionCreatedHandler().ClientOnComponentInteractionCreated; // Кнопки
+        
+        // Используем слэш-команды
+        var slashCommands = Client.UseSlashCommands();
+        slashCommands.SlashCommandErrored += new SlashCommandsHandler().ErrorHandlerAsync;
+        slashCommands.SlashCommandInvoked += new SlashCommandsHandler().InvokeHandlerAsync;
+        slashCommands.SlashCommandExecuted += new SlashCommandsHandler().ExecuteHandlerAsync;
+        slashCommands.RegisterCommands<SetupCommand>();
         
         // Подключаемся к серверу для прослушивания событий
         await Client.ConnectAsync(
