@@ -36,7 +36,10 @@ public class Program
             })
             .CreateLogger();
         
+        // Создаем бота
         var voiceMaster = new Bot(token: env["BOT_TOKEN"]);
+        
+        // Запускаем бота
         await voiceMaster.StartAsync();
     }
 }
