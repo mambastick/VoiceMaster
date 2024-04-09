@@ -43,6 +43,7 @@ public class SetupCommand : ApplicationCommandModule
         }
         catch (Exception ex)
         {
+            Log.Logger.Error(ex, ex.Message);
             await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                 new DiscordInteractionResponseBuilder()
                     .WithContent("Произошла ошибка, канал для создания временных голосовых каналов не был создан.")
