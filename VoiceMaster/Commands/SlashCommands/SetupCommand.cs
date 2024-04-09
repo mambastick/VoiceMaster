@@ -15,7 +15,7 @@ public class VoiceChannelCommands : ApplicationCommandModule
         {
             var voiceChannel = await new SetupChannel().GetAsync(context.Guild.Id);
             if (voiceChannel is not null)
-                throw new Exception("Создающий голосовой канал уже установлен.");
+                throw new Exception("Канал для создания временных голосовых каналов уже установлен.");
 
             var parent = await context.Guild.CreateChannelCategoryAsync("Voice Master");
             var setupVoiceChannel = await context.Guild.CreateVoiceChannelAsync("Создать канал", parent);
@@ -31,7 +31,7 @@ public class VoiceChannelCommands : ApplicationCommandModule
             voiceChannel.GuildId = context.Guild.Id;
             await voiceChannel.AddAsync();
         }
-        catch (Exception ex) when (ex.Message == "The setup channel has already been created.")
+        catch (Exception ex) when (ex.Message == "Канал для создания временных голосовых каналов уже установлен.")
         {
             await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                 new DiscordInteractionResponseBuilder()
