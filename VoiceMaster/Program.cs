@@ -17,7 +17,7 @@ public class Program
         ValidateEnvironment(DotEnv.Read());
         
         // Создание логгера
-        var logger = Log.Logger = new LoggerConfiguration()
+        Log.Logger = new LoggerConfiguration()
             .WriteTo.Console(
                 theme: SystemConsoleTheme.Colored,
                 restrictedToMinimumLevel: LogEventLevel.Information,
