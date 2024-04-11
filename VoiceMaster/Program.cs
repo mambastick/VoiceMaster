@@ -21,8 +21,7 @@ public class Program
                 outputTemplate: "{Timestamp:dd-MM-yyyy HH:mm:ss} [{Level:u}] {Message:lj}{NewLine}{Exception}"
             ) // Логируем в косноль
             .WriteTo.File(
-                path: Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs",
-                    $"{DateTime.Now:dd-MM-yyyy HH:mm:ss}.log"),
+                path: $"logs/{DateTime.Now:dd-MM-yyyy_HH-mm-ss}.log",
                 outputTemplate: "{Timestamp:dd-MM-yyyy HH:mm:ss} [{Level:u}] {Message:lj}{NewLine}{Exception}",
                 restrictedToMinimumLevel: LogEventLevel.Information
             ) // Логируем в файл
@@ -42,6 +41,7 @@ public class Program
         // Запускаем бота
         await voiceMaster.StartAsync();
         
+        // Закрываем логгер и очищаем память
         await Log.CloseAndFlushAsync();
     }
 }
