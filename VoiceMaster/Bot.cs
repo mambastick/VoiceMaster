@@ -33,7 +33,8 @@ public class Bot(string token)
             Intents =
                 DiscordIntents.Guilds // Сервера (где бот добавлен и т.д.)
                 | DiscordIntents.GuildVoiceStates // Голосовая активность пользователей и ботов (зашел/вышел в голосовой канал)
-                | DiscordIntents.GuildIntegrations, // Кнопки, формы и т.д.
+                | DiscordIntents.GuildIntegrations // Кнопки, формы и т.д.
+                | DiscordIntents.GuildVoiceStates, // Действия пользователя в голосовом канале
             AutoReconnect = true, // Разрешаем автопереподключения в случае ошибки или т.п.
             MinimumLogLevel = LogLevel.Information, // Устанавливаем минимальный уровень логирования на Debug
         };
