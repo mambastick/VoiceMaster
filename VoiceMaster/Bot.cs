@@ -37,6 +37,7 @@ public class Bot(string token)
                 | DiscordIntents.GuildVoiceStates, // Действия пользователя в голосовом канале
             AutoReconnect = true, // Разрешаем автопереподключения в случае ошибки или т.п.
             MinimumLogLevel = LogLevel.Information, // Устанавливаем минимальный уровень логирования на Debug
+            LogUnknownEvents = false // Отключаем логгирование неизвестных событий
         };
         
         // Создаем клиент Discord с использованием конфигурации бота
