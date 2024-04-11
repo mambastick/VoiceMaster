@@ -13,7 +13,7 @@ public class VoiceStateUpdateHandler
         try
         {
             // Создаем новый поток, когда пользователь входит или выход из голосового канала
-            _ = Task.Run(async () =>
+            Task.Run(async () =>
             {
                 // Получаем данные о создающем голосовом канале из базы данных
                 var setupVoiceChannel = await new SetupChannel().GetAsync(e.Guild.Id);
@@ -90,7 +90,7 @@ public class VoiceStateUpdateHandler
                     ChannelId = newTempVoiceChannel.Id,
                     GuildId = newTempVoiceChannel.Guild.Id,
                     UserId = user.Id,
-                    SetupChannelId = e.Channel.Id
+                    SetupChannelId = e.Channel.Id,
                 }.AddAsync();
 
                 Log.Logger.Information(
