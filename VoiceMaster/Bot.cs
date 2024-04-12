@@ -3,9 +3,14 @@ using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using VoiceMaster.Handlers;
 using VoiceMaster.Handlers.Guild;
 using VoiceMaster.Commands.SlashCommands;
+using VoiceMaster.Handlers.Channel;
+using VoiceMaster.Handlers.Command.SlashCommand;
+using VoiceMaster.Handlers.Error;
+using VoiceMaster.Handlers.Interaction;
+using VoiceMaster.Handlers.Ready;
+using VoiceMaster.Handlers.VoiceState;
 
 namespace VoiceMaster;
 
