@@ -1,20 +1,60 @@
-﻿
-
-using Database;
-using DiscordBot;
-using LoggerService;
+﻿using dotenv.net;
+using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.Discord;
+using Serilog.Sinks.SystemConsole.Themes;
 
 namespace VoiceMaster;
 
-internal abstract class Program
+public class Program
 {
     private static async Task Main()
     {
-        var bot = new Bot(
-            "MTE3MDg3MTc1MjU2MjMxNTI2NQ.GQ4Fgm.a7wz7WzPsWOqVpY9IQXhug3mJ-pZFscB3DKNZc",
-            new Logger(),
-            new MySqlDatabase("mambaskills.ru", "VoiceMaster", "VoiceMaster", "jVX-6ti-m3V-yYq")); 
-        await bot.StartAsync();
-        await Task.Delay(-1);
+        // Загрузка переменных сред
+        var env = AppSettings.GetAppSettings();
+
+        // Создание логгера
+        Log.Logger = new LoggerConfiguration()
+            .WriteTo.Console(
+                theme: SystemConsoleTheme.Colored,
+                restrictedToMinimumLevel: LogEventLevel.Information,
+                outputTemplate: "{Timestamp:dd-MM-yyyy HH:mm:ss} [{Level:u}] {Message:lj}{NewLine}{Exception}"
+            ) // Логируем в косноль
+            .WriteTo.File(
+                path: $"logs/{DateTime.Now:dd-MM-yyyy_HH-mm-ss}.log",
+                outputTemplate: "{Timestamp:dd-MM-yyyy HH:mm:ss} [{Level:u}] {Message:lj}{NewLine}{Exception}",
+                restrictedToMinimumLevel: LogEventLevel.Information
+            ) // Логируем в файл
+            .WriteTo.Async(a =>
+            {
+                a.Discord(
+                    webhookId: Convert.ToUInt64(env["WEBHOOK_ID"]),
+                    webhookToken: env["WEBHOOK_URL"],
+                    restrictedToMinimumLevel: LogEventLevel.Information
+                ); // Логируем в Discord
+            })
+            .CreateLogger();
+
+        // Создаем бота
+        var voiceMaster = new Bot(token: env["BOT_TOKEN"]);
+
+        try
+        {
+            // Запускаем бота
+            await voiceMaster.StartAsync();
+        }
+        catch (Exception ex)
+        {
+            Log.Logger.Error(ex, ex.Message);
+            throw;
+        }
+        finally
+        {
+            // Останавливаем бота
+            await voiceMaster.StopAsync();
+
+            // Закрываем логгер и очищаем память
+            await Log.CloseAndFlushAsync();
+        }
     }
 }
