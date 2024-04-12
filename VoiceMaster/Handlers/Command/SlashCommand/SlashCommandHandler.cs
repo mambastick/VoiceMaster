@@ -4,7 +4,7 @@ using Serilog;
 
 namespace VoiceMaster.Handlers;
 
-public class SlashCommandsHandler
+public class SlashCommandHandler
 {
     public Task ExecuteHandlerAsync(SlashCommandsExtension sender, SlashCommandExecutedEventArgs args)
     {
