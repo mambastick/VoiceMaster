@@ -22,7 +22,7 @@ public class GuildCreatedHandler
                     .WithDescription("Привет, уважаемые администраторы.\n" +
                                      "Я рад, что вы добавили меня на свой сервер.\n\n" +
                                      "Меня создали для создания временных голосовых каналов для пользователей вашего сервера.\n" +
-                                     "Просто используйте кнопку \"Создать создающий канал\".")
+                                     "Просто используйте кнопку \"Установить\".")
                     .WithColor(DiscordColor.IndianRed);
 
                 var helloMessage = new DiscordMessageBuilder()
@@ -30,8 +30,8 @@ public class GuildCreatedHandler
                     .AddComponents(new List<DiscordComponent>()
                     {
                         new DiscordButtonComponent(ButtonStyle.Success,
-                            "create_setup_channel",
-                            "Создать создающий канал",
+                            "createSetupChannel",
+                            "Установить",
                             emoji: new DiscordComponentEmoji(DiscordEmoji.FromName(sender, ":loud_sound:")))
                     });
 

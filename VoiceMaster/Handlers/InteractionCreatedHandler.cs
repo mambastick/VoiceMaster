@@ -19,7 +19,7 @@ public class InteractionCreatedHandler
                 Log.Logger.Information($"Пользователь {user.DisplayName} ({user.Id}) нажал на кнопку {args.Id}");
                 switch (args.Id)
                 {
-                    case "create_setup_channel":
+                    case "createSetupChannel":
                         var interactionContext = new InteractionContext();
 
                         var interactionProperties = interactionContext.GetType().GetProperties();
