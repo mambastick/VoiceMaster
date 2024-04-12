@@ -2,7 +2,7 @@
 using DSharpPlus.EventArgs;
 using Serilog;
 
-namespace VoiceMaster.Handlers;
+namespace VoiceMaster.Handlers.Error;
 
 public class ErrorHandler
 {
