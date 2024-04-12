@@ -48,7 +48,9 @@ public class SetupChannel : VoiceChannel
         try
         {
             await using var db = new ApplicationContext();
-            return await db.SetupChannels.FirstOrDefaultAsync(sc => sc.GuildId == guildId);
+            return await db.SetupChannels
+                .Include(tc => tc.TempChannels)
+                .FirstOrDefaultAsync(sc => sc.GuildId == guildId);
         }
         catch (Exception ex)
         {
