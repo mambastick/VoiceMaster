@@ -4,7 +4,7 @@ using DSharpPlus.EventArgs;
 using Serilog;
 using VoiceMaster.Models;
 
-namespace VoiceMaster.Handlers;
+namespace VoiceMaster.Handlers.VoiceState;
 
 public class VoiceStateUpdateHandler
 {
@@ -15,11 +15,8 @@ public class VoiceStateUpdateHandler
             // Создаем новый поток, когда пользователь входит или выход из голосового канала
             Task.Run(async () =>
             {
-                // Получаем данные о создающем голосовом канале из базы данных
-                var setupVoiceChannel = await new SetupChannel().GetAsync(e.Guild.Id, e.User.Id);
-
                 // Если создающий голосовой канал не найден или не существует, ничего дальше не делаем
-                if (setupVoiceChannel is null)
+                if (await new SetupChannel().GetAsync(e.Guild.Id, e.User.Id) is not SetupChannel setupVoiceChannel)
                     return;
 
                 // Если создается канал
@@ -82,7 +79,7 @@ public class VoiceStateUpdateHandler
 
                 // Перемещаем пользователя в его новый временный канал
                 await user.ModifyAsync(properties => properties.VoiceChannel = newTempVoiceChannel);
-                
+
                 // TODO: Исправить ошибку с добавлением в базу данных
                 // Добавляем временный голосовой канал в базу данных
                 await new TempChannel
@@ -110,10 +107,10 @@ public class VoiceStateUpdateHandler
         {
             // Временный голосовой канал
             var tempVoiceChannel = e.Before.Channel;
-            
+
             // Пользователь
             var user = e.User as DiscordMember;
-            
+
             // Удаляем временный голосовой канал
             await tempVoiceChannel.DeleteAsync($"Пользователь {user.DisplayName} удалил голосовой канал");
 
@@ -124,7 +121,7 @@ public class VoiceStateUpdateHandler
                     GuildId = tempVoiceChannel.Guild.Id
                 }
                 .DeleteAsync();
-            
+
             Log.Logger.Information(
                 $"Пользователь {user.DisplayName} ({user.Id}) удалил голосовой канал: {tempVoiceChannel.Name} ({tempVoiceChannel.Id}).");
         }
