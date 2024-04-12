@@ -12,7 +12,7 @@ public class Program
     {
         // Загрузка переменных сред
         var env = AppSettings.GetAppSettings();
-        
+
         // Создание логгера
         Log.Logger = new LoggerConfiguration()
             .WriteTo.Console(
@@ -34,14 +34,27 @@ public class Program
                 ); // Логируем в Discord
             })
             .CreateLogger();
-        
+
         // Создаем бота
         var voiceMaster = new Bot(token: env["BOT_TOKEN"]);
-        
-        // Запускаем бота
-        await voiceMaster.StartAsync();
-        
-        // Закрываем логгер и очищаем память
-        await Log.CloseAndFlushAsync();
+
+        try
+        {
+            // Запускаем бота
+            await voiceMaster.StartAsync();
+        }
+        catch (Exception ex)
+        {
+            Log.Logger.Error(ex, ex.Message);
+            throw;
+        }
+        finally
+        {
+            // Останавливаем бота
+            await voiceMaster.StopAsync();
+
+            // Закрываем логгер и очищаем память
+            await Log.CloseAndFlushAsync();
+        }
     }
 }
