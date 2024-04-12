@@ -31,7 +31,28 @@ public class InteractionCreatedHandler
                             prop.SetValue(interactionContext, value);
                         }
 
-                        await new SetupCommand().SetupCommandAsync(interactionContext);
+                        var createSetupChannelTask = new SetupCommand().SetupCommandAsync(interactionContext);
+                        var editMessageTask = Task.Run(async () =>
+                        {
+                            var embedGettingStarted = new DiscordEmbedBuilder()
+                                .WithTitle("Начало работы")
+                                .WithDescription("Привет, уважаемые администраторы.\n" +
+                                                 "Я рад, что вы добавили меня на свой сервер.\n\n" +
+                                                 "Меня создали для создания временных голосовых каналов для пользователей вашего сервера.\n" +
+                                                 "Просто используйте кнопку \"Установить\".")
+                                .WithColor(DiscordColor.IndianRed);
+
+                            await args.Message.ModifyAsync(new DiscordMessageBuilder()
+                                .AddEmbed(embedGettingStarted)
+                                .AddComponents(new DiscordButtonComponent(ButtonStyle.Success,
+                                    "createSetupChannel",
+                                    "Установить",
+                                    true,
+                                    new DiscordComponentEmoji(DiscordEmoji.FromName(sender, ":loud_sound:")))));
+                        });
+
+                        await Task.WhenAll(createSetupChannelTask, editMessageTask);
+
                         return Task.CompletedTask;
                 }
 
