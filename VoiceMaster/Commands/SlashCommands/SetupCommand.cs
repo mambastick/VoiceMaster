@@ -33,6 +33,9 @@ public class SetupCommand : ApplicationCommandModule
                 GuildId = setupVoiceChannel.Guild.Id
             };
             await voiceChannel.AddAsync();
+
+            var user = context.User as DiscordMember;
+            Log.Logger.Information($"Пользователь {user.DisplayName} ({user.Id}) успешно создал создающий канал.");
         }
         catch (Exception ex) when (ex.Message == "Канал для создания временных голосовых каналов уже установлен.")
         {
