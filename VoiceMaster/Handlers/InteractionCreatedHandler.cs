@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using DSharpPlus;
+using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.SlashCommands;
 using Serilog;
@@ -15,7 +16,8 @@ public class InteractionCreatedHandler
         {
             _ = Task.Run(async () =>
             {
-                Log.Logger.Information($"User have been pressed button {args.Id}");
+                var user = args.User as DiscordMember;
+                Log.Logger.Information($"Пользователь {user.DisplayName} ({user.Id}) нажал на кнопку {args.Id}");
                 switch (args.Id)
                 {
                     case "create_setup_channel":
