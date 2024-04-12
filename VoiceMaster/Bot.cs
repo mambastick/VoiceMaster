@@ -64,9 +64,9 @@ public class Bot(string token)
         
         // Используем слэш-команды
         var slashCommands = Client.UseSlashCommands();
-        slashCommands.SlashCommandErrored += new SlashCommandsHandler().ErrorHandlerAsync;
-        slashCommands.SlashCommandInvoked += new SlashCommandsHandler().InvokeHandlerAsync;
-        slashCommands.SlashCommandExecuted += new SlashCommandsHandler().ExecuteHandlerAsync;
+        slashCommands.SlashCommandErrored += new SlashCommandHandler().ErrorHandlerAsync;
+        slashCommands.SlashCommandInvoked += new SlashCommandHandler().InvokeHandlerAsync;
+        slashCommands.SlashCommandExecuted += new SlashCommandHandler().ExecuteHandlerAsync;
         slashCommands.RegisterCommands<SetupCommand>();
         
         // Подключаемся к серверу для прослушивания событий
