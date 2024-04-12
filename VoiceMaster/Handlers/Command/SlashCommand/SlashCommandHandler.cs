@@ -2,7 +2,7 @@
 using DSharpPlus.SlashCommands.EventArgs;
 using Serilog;
 
-namespace VoiceMaster.Handlers;
+namespace VoiceMaster.Handlers.Command.SlashCommand;
 
 public class SlashCommandHandler
 {
