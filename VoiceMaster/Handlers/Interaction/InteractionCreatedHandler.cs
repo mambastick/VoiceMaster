@@ -5,7 +5,7 @@ using DSharpPlus.SlashCommands;
 using Serilog;
 using VoiceMaster.Commands.SlashCommands;
 
-namespace VoiceMaster.Handlers;
+namespace VoiceMaster.Handlers.Interaction;
 
 public class InteractionCreatedHandler
 {
