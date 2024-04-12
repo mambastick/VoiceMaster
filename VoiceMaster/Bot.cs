@@ -43,6 +43,7 @@ public class Bot(string token)
             
             AutoReconnect = true, // Разрешаем автопереподключения в случае ошибки или т.п.
             
+            MinimumLogLevel = LogLevel.Error, // Устанавливаем минимальный уровень логгирование для бота
             LoggerFactory = new LoggerFactory().AddSerilog(), // Используем Serilog в качесте логгера
             
             LogUnknownEvents = false // Отключаем логгирование неизвестных событий
