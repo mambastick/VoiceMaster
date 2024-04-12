@@ -21,13 +21,10 @@ public class InteractionCreatedHandler
                     case "create_setup_channel":
                         var interactionContext = new InteractionContext();
 
-                        var interactionProperties = interactionContext.GetType()
-                            .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-                            .Where(prop => prop.CanWrite && prop.DeclaringType == typeof(InteractionContext));
+                        var interactionProperties = interactionContext.GetType().GetProperties();
 
                         foreach (var prop in interactionProperties)
                         {
-                            // TODO: Пофиксить баг с заполнением данных по полям класса
                             var argProp = args.GetType().GetProperty(prop.Name);
                             if (argProp == null || argProp.PropertyType != prop.PropertyType) continue;
                             var value = argProp.GetValue(args);
