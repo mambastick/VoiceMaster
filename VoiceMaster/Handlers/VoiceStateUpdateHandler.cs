@@ -16,7 +16,7 @@ public class VoiceStateUpdateHandler
             Task.Run(async () =>
             {
                 // Получаем данные о создающем голосовом канале из базы данных
-                var setupVoiceChannel = await new SetupChannel().GetAsync(e.Guild.Id);
+                var setupVoiceChannel = await new SetupChannel().GetAsync(e.Guild.Id, e.User.Id);
 
                 // Если создающий голосовой канал не найден или не существует, ничего дальше не делаем
                 if (setupVoiceChannel is null)

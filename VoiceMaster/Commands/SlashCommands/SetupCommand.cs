@@ -13,7 +13,7 @@ public class SetupCommand : ApplicationCommandModule
     {
         try
         {
-            var voiceChannel = await new SetupChannel().GetAsync(context.Guild.Id);
+            var voiceChannel = await new SetupChannel().GetAsync(context.Guild.Id, context.User.Id);
             if (voiceChannel is not null)
                 throw new Exception("Канал для создания временных голосовых каналов уже установлен.");
 

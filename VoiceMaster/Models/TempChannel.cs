@@ -4,7 +4,7 @@ using VoiceMaster.Database;
 
 namespace VoiceMaster.Models
 {
-    public class TempChannel
+    public class TempChannel : VoiceChannel
     {
         // Уникальный ID созданного канала
         public ulong ChannelId { get; set; }
@@ -20,13 +20,13 @@ namespace VoiceMaster.Models
 
         // Навигационное свойство к SetupChannel
         public SetupChannel SetupChannel { get; set; }
-        
-        public async Task AddAsync()
+
+        public override async Task AddAsync()
         {
             try
             {
                 await using var db = new ApplicationContext();
-                await db.AddAsync(this);
+                await db.TempChannels.AddAsync(this);
                 await db.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -35,24 +35,7 @@ namespace VoiceMaster.Models
             }
         }
 
-        public async Task<TempChannel?> GetAsync(ulong guildId, ulong userId)
-        {
-            try
-            {
-                await using var db = new ApplicationContext();
-                return await db.TempChannels
-                    .Include(sc => sc.SetupChannel)
-                    .FirstOrDefaultAsync(tc => tc.GuildId == guildId && tc.UserId == userId);
-            }
-            catch (Exception ex)
-            {
-                Log.Logger.Error(ex, ex.Message);
-            }
-
-            return null;
-        }
-
-        public async Task DeleteAsync()
+        public override async Task DeleteAsync()
         {
             try
             {
@@ -64,6 +47,36 @@ namespace VoiceMaster.Models
             {
                 Log.Logger.Error(ex, ex.Message);
             }
+        }
+
+        public override async Task UpdateAsync()
+        {
+            try
+            {
+                await using var db = new ApplicationContext();
+                db.TempChannels.Update(this);
+                await db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, ex.Message);
+            }
+        }
+
+        public override async Task<VoiceChannel?> GetAsync(ulong channelId, ulong userId)
+        {
+            try
+            {
+                await using var db = new ApplicationContext();
+                return await db.TempChannels.FirstOrDefaultAsync(tc =>
+                    tc.ChannelId == channelId && tc.UserId == userId);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, ex.Message);
+            }
+
+            return null;
         }
     }
 }
