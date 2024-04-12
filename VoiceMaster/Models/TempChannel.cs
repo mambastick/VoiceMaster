@@ -68,7 +68,9 @@ namespace VoiceMaster.Models
             try
             {
                 await using var db = new ApplicationContext();
-                return await db.TempChannels.FirstOrDefaultAsync(tc =>
+                return await db.TempChannels
+                    .Include(sc => sc.SetupChannel)
+                    .FirstOrDefaultAsync(tc =>
                     tc.ChannelId == channelId && tc.UserId == userId);
             }
             catch (Exception ex)
