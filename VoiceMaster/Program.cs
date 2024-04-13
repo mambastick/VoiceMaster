@@ -1,8 +1,10 @@
 ﻿using dotenv.net;
+using Polly;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.Discord;
 using Serilog.Sinks.SystemConsole.Themes;
+using VoiceMaster.Database;
 
 namespace VoiceMaster;
 
@@ -37,6 +39,25 @@ public class Program
 
         // Создаем бота
         var voiceMaster = new Bot(token: env["BOT_TOKEN"]);
+            // Политика ретрая для ожидания доступности базы данных
+            var retryPolicy = Policy
+                .Handle<MySqlException>()
+                .WaitAndRetryAsync(new[]
+                {
+                    TimeSpan.FromSeconds(1),
+                    TimeSpan.FromSeconds(2),
+                    TimeSpan.FromSeconds(5),
+                    TimeSpan.FromSeconds(10),
+                    TimeSpan.FromSeconds(20),
+                });
+
+            // Подключение к базе данных с повторными попытками
+            await retryPolicy.ExecuteAsync(async () =>
+            {
+                await using var context = new ApplicationContext();
+                await context.Database.MigrateAsync();
+                Log.Information("Успешно подключились к базе данных.");
+            });
 
         try
         {
