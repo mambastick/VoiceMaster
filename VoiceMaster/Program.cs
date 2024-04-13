@@ -43,11 +43,9 @@ namespace VoiceMaster
                 .Handle<MySqlException>()
                 .WaitAndRetryAsync(new[]
                 {
-                    TimeSpan.FromSeconds(1),
-                    TimeSpan.FromSeconds(2),
                     TimeSpan.FromSeconds(5),
-                    TimeSpan.FromSeconds(10),
-                    TimeSpan.FromSeconds(20),
+                    TimeSpan.FromSeconds(5),
+                    TimeSpan.FromSeconds(5),
                 });
 
             // Подключение к базе данных с повторными попытками
