@@ -30,7 +30,6 @@ services:
 volumes:
   mysql_data:
     
-# Docker Networks
 networks:
   app-network:
     driver: bridge
