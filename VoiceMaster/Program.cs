@@ -53,6 +53,7 @@ namespace VoiceMaster
             // Подключение к базе данных с повторными попытками
             await retryPolicy.ExecuteAsync(async () =>
             {
+                Log.Information("Подключаюсь к базе данных...");
                 await using var context = new ApplicationContext();
                 await context.Database.MigrateAsync();
                 Log.Information("Успешно подключились к базе данных.");
