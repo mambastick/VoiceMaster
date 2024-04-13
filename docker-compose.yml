@@ -20,6 +20,7 @@ services:
 
   mysql:
     image: mysql:latest
+    container_name: db
     environment:
       MYSQL_ROOT_PASSWORD: YOUR_ROOT_PASSWORD
       MYSQL_DATABASE: YOUR_DATABASE_NAME
