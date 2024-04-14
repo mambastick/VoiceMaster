@@ -63,7 +63,7 @@ namespace VoiceMaster.Models
             }
         }
 
-        public override async Task<VoiceChannel?> GetAsync(ulong channelId, ulong userId)
+        public override async Task<VoiceChannel?> GetAsync(ulong guildId, ulong userId)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace VoiceMaster.Models
                 return await db.TempChannels
                     .Include(sc => sc.SetupChannel)
                     .FirstOrDefaultAsync(tc =>
-                    tc.ChannelId == channelId && tc.UserId == userId);
+                    tc.GuildId == guildId && tc.UserId == userId);
             }
             catch (Exception ex)
             {

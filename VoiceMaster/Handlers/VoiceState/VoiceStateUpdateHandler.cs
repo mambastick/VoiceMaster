@@ -48,12 +48,9 @@ public class VoiceStateUpdateHandler
         {
             // Пользователь
             var user = e.User as DiscordMember;
-
-            // Проверяем: есть ли временный голосовой канал у пользователя на данном сервере ?
-            var dbTempVoiceChannel = await new TempChannel().GetAsync(e.Guild.Id, user.Id);
-
+            
             // Если временный голосовой канал у пользователя создан
-            if (dbTempVoiceChannel is not null)
+            if (await new TempChannel().GetAsync(e.Guild.Id, user.Id) is TempChannel dbTempVoiceChannel)
             {
                 // Получаем данные об этом временном канале
                 var tempVoiceChannel = e.Guild.GetChannel(dbTempVoiceChannel.ChannelId);
