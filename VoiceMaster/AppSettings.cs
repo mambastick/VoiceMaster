@@ -14,6 +14,9 @@ public abstract class AppSettings
             var lines = File.ReadAllLines(".env");
             foreach (var line in lines)
             {
+                if (line.StartsWith('#'))
+                    continue;
+                    
                 var parts = line.Split('=', 2);
                 if (parts.Length == 2)
                 {
