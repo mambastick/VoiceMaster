@@ -59,7 +59,7 @@ public class ChannelDeletedHandler
                 }
                 
                 // Если временный канал существует и его ID схож с ID удаленного канала
-                if (await new TempChannel().GetAsync(deletedChannel.Id, user.Id) is TempChannel
+                if (await new TempChannel().GetAsync(guild.Id, user.Id) is TempChannel
                         tempChannel && tempChannel.ChannelId == deletedChannel.Id)
                 {
                     // Удаляем создающий канал
